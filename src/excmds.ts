@@ -3,32 +3,17 @@
 // All need to be async.
 //
 // Going with meta first scheme with flags in meta.
+//
+
+function content(target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
+    return descriptor
+}
 
 class ExCmds {
     @content
-    scrollline([x],{},meta) {
-        // whatever
-        excmd([3, x],null,meta)
-        parser(`excmd 3 ${x}`, meta)
-    }
-
-    @content
-    scrollline([x],{flags: {down}, meta}) {
-        // whatever
-        excmd([3, x],{meta})
-        parser(`excmd 3 ${x}`, meta)
-    }
-
-    /**
-     * @param blah is x
-     */
-    @content
-    scrollline({msg}, [x, y], {down, up}) {
+    scrollline({msg, flags: {down, up}}, x, y) {
         this.excmd({meta.msg}, 3, x)
         parser(`excmd 3 ${x}`, meta)
-    }
-
-    scrolline({msg, flags: {up, down}}, x, y) {
     }
 
     @content
